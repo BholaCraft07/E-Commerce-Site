@@ -1,5 +1,10 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Navbar from "@/component/Navbar";
+import { ThemeProvider } from "@/context/ContextApi";
+import { ApiProvider } from "@/context/Apidata";
+import { CartProvider } from "@/context/CartContext";
+import Footer from "@/component/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,8 +24,19 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        {children}
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} bg-white dark:bg-gray-900 `}
+      >
+        <ThemeProvider>
+          <ApiProvider>
+            <CartProvider>
+              <Navbar />
+              {children}
+              <Footer/>
+            </CartProvider>
+          </ApiProvider>
+        </ThemeProvider>
+        <div id="portal-root"></div>
       </body>
     </html>
   );
